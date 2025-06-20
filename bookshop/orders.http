@@ -1,0 +1,19 @@
+GET http://localhost:4004/odata/v4/stats/OrderInfo
+
+###
+POST http://localhost:4004/odata/v4/catalog/Orders
+Content-Type: application/json
+
+{"book_ID": 201, "quantity": 2}
+
+###
+POST http://localhost:4004/odata/v4/catalog/Orders
+Content-Type: application/json
+
+{"book_ID": 252, "quantity": 7}
+
+###
+POST http://localhost:4004/odata/v4/catalog/Orders
+Content-Type: application/json
+
+{"book_ID": 421, "quantity": 42}

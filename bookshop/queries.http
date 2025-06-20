@@ -1,0 +1,13 @@
+GET http://localhost:4004/odata/v4/catalog/Books
+
+###
+POST http://localhost:4004/odata/v4/catalog/Books
+Content-Type: application/json
+
+{"ID": 10, "title": "new Book: The Night"}
+
+###
+POST http://localhost:4004/odata/v4/catalog/Orders
+Content-Type: application/json
+
+{"ID": "6a383194-1f35-49ff-bbda-3b4f2cd7e995", "book_ID": 421, "quantity": 11}

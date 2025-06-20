@@ -1,0 +1,22 @@
+GET http://localhost:4004/odata/v4/catalog/Authors?$expand=books
+
+###
+GET http://localhost:4004/odata/v4/catalog/Books?$expand=author
+
+###
+POST http://localhost:4004/odata/v4/catalog/Authors
+Content-Type: application/json
+
+{"ID": 4712, "name": "Max Strei"}
+
+###
+POST http://localhost:4004/odata/v4/catalog/Books
+Content-Type: application/json
+
+{"ID": 1000, "title": "Java rocks", "stock": 10, "author_ID": 4711}
+
+###
+POST http://localhost:4004/odata/v4/catalog/Orders
+Content-Type: application/json
+
+{"ID": "6a383194-1f35-49ff-bbda-3b4f2cd7e995", "book_ID": 421, "quantity": 11}
