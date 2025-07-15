@@ -1,6 +1,6 @@
 using btp.j as bj from '../db/data-model';
 
-service EmployeeServices {
+service EmployeeServices @(impl: 'srv/emp_service.js') {
 
     entity Employees @(Capabilities: {
         InsertRestrictions: {
@@ -15,32 +15,51 @@ service EmployeeServices {
             $Type: 'Capabilities.DeleteRestrictionsType',
             Deletable,
         },
-    })                as 
-    // select from 
-    projection on
-    bj.EMPLOYEE_REGISTRY;
+    }) as
+         // select from
+             projection on bj.EMPLOYEE_REGISTRY;
 
-    annotate Employees with @odata.draft.enabled;
+    // annotate Employees with @odata.draft.enabled;
 
 
     // @readonly
-    entity Department as 
-    // select from
-projection on
-     bj.DEPARTMENT;
+    entity Department @(Capabilities: {
+        InsertRestrictions: {
+            $Type: 'Capabilities.InsertRestrictionsType',
+            Insertable,
+        },
+        UpdateRestrictions: {
+            $Type: 'Capabilities.UpdateRestrictionsType',
+            Updatable,
+        },
+        DeleteRestrictions: {
+            $Type: 'Capabilities.DeleteRestrictionsType',
+            Deletable,
+        },
+    }) as
+         // select from
+             projection on bj.DEPARTMENT
+    //    {
+    //     ID,
+    //     NAME,
+    //     Employees : redirected to Employees
+    //    }
+    ;
 
     annotate Department with @odata.draft.enabled;
 
 }
 
-annotate EmployeeServices.Employees with @(
-    UI: {
-    SelectionFields    : [
-        DEPARTMENT_ID,
+annotate EmployeeServices.Employees with @(UI: {
+    SelectionFields: [
         NAME,
         EMAIL_ID
     ],
-    LineItem           : [
+    LineItem       : [
+        {
+            $Type: 'UI.DataField',
+            Value: ID,
+        },
         {
             $Type: 'UI.DataField',
             Value: NAME,
@@ -51,23 +70,122 @@ annotate EmployeeServices.Employees with @(
         },
         {
             $Type: 'UI.DataField',
-            Value: DEPARTMENT_ID,
+            Value: Department_ID,
         },
     ],
-    LineItem #Child          : [
+
+    Identification : [
         {
             $Type: 'UI.DataField',
-            Value: DEPARTMENT.ID
+            Value: ID,
         },
         {
             $Type: 'UI.DataField',
-            Value: DEPARTMENT.NAME
+            Value: NAME,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: EMAIL_ID,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: Department_ID,
         },
     ],
+    HeaderInfo     : {
+        $Type         : 'UI.HeaderInfoType',
+        TypeName      : 'Employee',
+        TypeNamePlural: 'Employees',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: NAME,
+        },
+        Description   : {
+            $Type: 'UI.DataField',
+            Value: ID,
+        },
+    },
+    Facets         : [{
+        $Type : 'UI.ReferenceFacet',
+        Target: '@UI.Identification',
+        ID    : 'Employee',
+        Label : 'Employee',
+    }, ],
+
+
+}) {
+    ID         @title: 'ID';
+    NAME       @title: 'Name';
+    EMAIL_ID   @title: 'Email ID';
+    Department @(title: 'Department ID',
+
+    // Common: {
+    //     ValueListWithFixedValues,
+    //     ValueList: {
+    //         $Type         : 'Common.ValueListType',
+    //         CollectionPath: 'Department',
+    //         Label         : 'Departments',
+    //         Parameters    : [
+    //             {
+    //                 $Type            : 'Common.ValueListParameterOut',
+    //                 LocalDataProperty: DEPARTMENT_ID,
+    //                 ValueListProperty: 'ID',
+    //             },
+    //             {
+    //                 $Type            : 'Common.ValueListParameterDisplayOnly',
+    //                 ValueListProperty: 'NAME',
+    //             },
+    //         ]
+    //     },
+    // }
+    );
+}
+
+annotate EmployeeServices.Department with @(UI: {
+    SelectionFields    : [
+        ID,
+        NAME
+    ],
+    LineItem           : [
+        {
+            $Type: 'UI.DataField',
+            Value: ID,
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: NAME,
+        },
+    ],
+    // LineItem #Child    : [
+    //     {
+    //         // $Type: 'UI.DataField',
+    //         Value: Employees.ID
+    //     },
+    //     {
+    //         // $Type: 'UI.DataField',
+    //         Value: Employees.NAME
+    //     },
+    //     {
+    //         // $Type: 'UI.DataField',
+    //         Value: Employees.EMAIL_ID
+    //     },
+    //     {
+    //         // $Type: 'UI.DataField',
+    //         Value: Employees.Department_ID
+    //     },
+    // ],
     HeaderInfo         : {
         $Type         : 'UI.HeaderInfoType',
-        TypeName      : 'Employees',
-        TypeNamePlural: 'Employees',
+        TypeName      : 'Department',
+        TypeNamePlural: 'Departments',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: NAME,
+        },
+        Description   : {
+            $Type: 'UI.DataField',
+            Value: ID,
+        },
     },
     Facets             : [
         {
@@ -84,9 +202,9 @@ annotate EmployeeServices.Employees with @(
         },
         {
             $Type : 'UI.ReferenceFacet',
-            Target: '@UI.LineItem#Child',
-            ID    : 'Department',
-            Label : 'Department',
+            Target: 'Employees/@UI.LineItem',
+            ID    : 'Employees',
+            Label : 'Employees',
         },
     ],
     FieldGroup #Default: {
@@ -94,15 +212,11 @@ annotate EmployeeServices.Employees with @(
         Data : [
             {
                 $Type: 'UI.DataField',
+                Value: ID,
+            },
+            {
+                $Type: 'UI.DataField',
                 Value: NAME,
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: EMAIL_ID,
-            },
-            {
-                $Type: 'UI.DataField',
-                Value: DEPARTMENT_ID,
             },
         ]
     },
@@ -127,30 +241,7 @@ annotate EmployeeServices.Employees with @(
             },
         ]
     },
-
 }) {
-    NAME       @title: 'Name';
-    EMAIL_ID   @title: 'Email ID';
-    DEPARTMENT @(
-        title : 'Department',
-        Common: {
-            ValueListWithFixedValues,
-            ValueList: {
-                $Type         : 'Common.ValueListType',
-                CollectionPath: 'Department',
-                Label         : 'Departments',
-                Parameters    : [
-                    {
-                        $Type            : 'Common.ValueListParameterOut',
-                        LocalDataProperty: DEPARTMENT_ID,
-                        ValueListProperty: 'ID',
-                    },
-                    {
-                        $Type            : 'Common.ValueListParameterDisplayOnly',
-                        ValueListProperty: 'NAME',
-                    },
-                ]
-            },
-        }
-    );
+    ID   @title: 'ID';
+    NAME @title: 'Name';
 }

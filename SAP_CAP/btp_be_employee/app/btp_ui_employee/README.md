@@ -1,26 +1,27 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Wed Jun 18 2025 07:37:09 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Tue Jul 15 2025 04:15:24 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>SAP Fiori Application Generator|
-|**App Generator Version**<br>1.18.0|
+|**App Generator Version**<br>1.18.2|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Template Used**<br>List Report Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/odata/v4/employee-services/|
 |**Module Name**<br>btp_ui_employee|
-|**Application Title**<br>Employee Administration|
+|**Application Title**<br>BTP Employee UI|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.136.1|
+|**UI5 Version**<br>1.138.0|
 |**Enable Code Assist Libraries**<br>False|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>False|
-|**Main Entity**<br>Employees|
+|**Main Entity**<br>Department|
+|**Navigation Entity**<br>Employees|
 
 ## btp_ui_employee
 
-Employee Administration
+An SAP Fiori application for BTP Employee UI.
 
 ### Starting the generated app
 

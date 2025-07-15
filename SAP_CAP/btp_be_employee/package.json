@@ -6,29 +6,47 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@sap/cds": "^8",
+    "@sap/cds": "^9.1.0",
+    "@sap/cds-mtxs": "^3.1.0",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
     "express": "^4"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.10.0",
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^2.0.2",
+    "@sap/cds-dk": "^9.1.1",
+    "mbt": "^1.2.29",
+    "rimraf": "^5.0.5"
   },
   "scripts": {
     "start": "cds-serve",
-    "watch-btp_ui_employee": "cds watch --open btp_ui_employee/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-btp_ui_employee": "cds watch --open btp_ui_employee/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-btp_employee": "cds watch --open btp_employee/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy btp_be_employee --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
   "cds": {
     "requires": {
       "db": {
         "kind": "sqlite",
         "credentials": {
-          "database": "empdb.db"
+          "url": "empdb.db"
         }
-      }
-    }
+      },
+      "[production]": {
+        "auth": "xsuaa",
+        "multitenancy": true
+      },
+      "html5-runtime": true,
+      "portal": true
+    },
+    "profile": "with-mtx-sidecar"
   },
   "sapux": [
+    "app/btp_ui_employee",
+    "app/btp_employee",
+    "app/btp_ui_employee",
     "app/btp_ui_employee"
   ]
 }

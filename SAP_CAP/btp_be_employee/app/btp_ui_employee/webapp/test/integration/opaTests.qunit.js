@@ -2,10 +2,11 @@ sap.ui.require(
     [
         'sap/fe/test/JourneyRunner',
         'btpuiemployee/test/integration/FirstJourney',
-		'btpuiemployee/test/integration/pages/EmployeesList',
+		'btpuiemployee/test/integration/pages/DepartmentList',
+		'btpuiemployee/test/integration/pages/DepartmentObjectPage',
 		'btpuiemployee/test/integration/pages/EmployeesObjectPage'
     ],
-    function(JourneyRunner, opaJourney, EmployeesList, EmployeesObjectPage) {
+    function(JourneyRunner, opaJourney, DepartmentList, DepartmentObjectPage, EmployeesObjectPage) {
         'use strict';
         var JourneyRunner = new JourneyRunner({
             // start index.html in web folder
@@ -16,7 +17,8 @@ sap.ui.require(
         JourneyRunner.run(
             {
                 pages: { 
-					onTheEmployeesList: EmployeesList,
+					onTheDepartmentList: DepartmentList,
+					onTheDepartmentObjectPage: DepartmentObjectPage,
 					onTheEmployeesObjectPage: EmployeesObjectPage
                 }
             },

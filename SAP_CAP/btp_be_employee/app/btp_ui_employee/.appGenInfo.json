@@ -1,26 +1,30 @@
 {
   "generationParameters": {
-    "generationDate": "Wed Jun 18 2025 07:37:09 GMT+0000 (Coordinated Universal Time)",
+    "generationDate": "Tue Jul 15 2025 04:15:24 GMT+0000 (Coordinated Universal Time)",
     "generatorPlatform": "SAP Business Application Studio",
     "serviceType": "Local Cap",
     "metadataFilename": "",
     "serviceUrl": "http://localhost:4004/odata/v4/employee-services/",
     "appName": "btp_ui_employee",
-    "appTitle": "Employee Administration",
-    "appDescription": "Employee Administration",
+    "appTitle": "BTP Employee UI",
+    "appDescription": "An SAP Fiori application for BTP Employee UI.",
     "appNamespace": "",
     "ui5Theme": "sap_horizon",
-    "ui5Version": "1.136.1",
+    "ui5Version": "1.138.0",
     "enableCodeAssist": false,
     "enableEslint": false,
     "enableTypeScript": false,
     "showMockDataInfo": false,
-    "generatorVersion": "1.18.0",
+    "generatorVersion": "1.18.2",
     "template": "List Report Page V4",
     "generatorName": "SAP Fiori Application Generator",
     "entityRelatedConfig": [
       {
         "type": "Main Entity",
+        "value": "Department"
+      },
+      {
+        "type": "Navigation Entity",
         "value": "Employees"
       }
     ],

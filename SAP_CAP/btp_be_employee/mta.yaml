@@ -1,0 +1,265 @@
+_schema-version: 3.3.0
+ID: btp_be_employee
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: btp_be_employee-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: btp_be_employee-auth
+  - name: btp_be_employee-destination
+  - name: btp_be_employee-db
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+- name: btp_be_employee-app-deployer
+  type: com.sap.application.content
+  path: gen
+  requires:
+  - name: btp_be_employee-html5-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: app/
+    requires:
+    - artifacts:
+      - btp_ui_employee.zip
+      name: btp_be_employeebtp_ui_employee
+      target-path: app/
+    - artifacts:
+      - btpuiemployee.zip
+      name: btpuiemployee
+      target-path: app/
+- name: btp_be_employeebtp_ui_employee
+  type: html5
+  path: app/btp_ui_employee
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: btp_be_employee-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: btp_be_employee-destination
+    parameters:
+      content-target: true
+  - name: btp_be_employee-html5-repo-host
+    parameters:
+      service-key:
+        name: btp_be_employee-html5-repo-host-key
+  - name: btp_be_employee-auth
+    parameters:
+      service-key:
+        name: btp_be_employee-auth-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: btp_be_employee_html_repo_host
+          ServiceInstanceName: btp_be_employee-html5-service
+          ServiceKeyName: btp_be_employee-html5-repo-host-key
+          sap.cloud.service: btp_be_employee
+        - Authentication: OAuth2UserTokenExchange
+          Name: btp_be_employee_uaa
+          ServiceInstanceName: btp_be_employee-xsuaa-service
+          ServiceKeyName: btp_be_employee-auth-key
+          sap.cloud.service: btp_be_employee
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+- name: btpuiemployee
+  type: html5
+  path: app/btp_ui_employee
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    - npm ci
+    - npm run build
+    supported-platforms: []
+- name: btp_be_employee
+  type: approuter.nodejs
+  path: app/router
+  properties:
+    TENANT_HOST_PATTERN: ^(.*)-${default-uri}
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: btp_be_employee-auth
+  - name: btp_be_employee-html5-runtime
+  - name: btp_be_employee-portal
+  - name: mtx-api
+    group: destinations
+    properties:
+      name: mtx-api
+      url: ~{mtx-url}
+  - name: btp_be_employee-destination
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  provides:
+  - name: app-api
+    properties:
+      app-protocol: ${protocol}
+      app-uri: ${default-uri}
+  parameters:
+    disk-quota: 256M
+    keep-existing-routes: true
+    memory: 256M
+- name: btp_be_employee-portal-deployer
+  type: com.sap.application.content
+  path: app/portal
+  requires:
+  - name: btp_be_employee-portal
+    parameters:
+      content-target: true
+      service-key:
+        config:
+          content-endpoint: developer
+        name: btp_be_employee-portal-key
+  - name: btp_be_employee-auth
+  - name: btp_be_employee-html5-repo-host
+  - name: btp_be_employee-app-deployer
+  parameters:
+    config:
+      TENANT_HOST_PATTERN: ^(.*)-${default-uri}
+  deployed-after:
+  - btp_be_employee-app-deployer
+- name: btp_be_employee-mtx
+  type: nodejs
+  path: gen/mtx/sidecar
+  requires:
+  - name: btp_be_employee-registry
+  - name: app-api
+    properties:
+      SUBSCRIPTION_URL: ~{app-protocol}://\${tenant_subdomain}-~{app-uri}
+  - name: btp_be_employee-db
+  - name: btp_be_employee-html5-runtime
+  - name: btp_be_employee-portal
+  - name: btp_be_employee-auth
+  provides:
+  - name: mtx-api
+    properties:
+      mtx-url: ${default-url}
+  parameters:
+    disk-quota: 512M
+    instances: 1
+    memory: 256M
+  build-parameters:
+    builder: npm-ci
+resources:
+- name: btp_be_employee-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      oauth2-configuration:
+        redirect-uris:
+        - https://~{app-api/app-uri}/**
+      tenant-mode: shared
+      xsappname: btp_be_employee-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: btp_be_employee-xsuaa-service
+    service-plan: application
+  requires:
+  - name: app-api
+- name: btp_be_employee-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: btp_be_employee-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+    service: destination
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: btp_be_employee-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: btp_be_employee-html5-service
+    service-plan: app-host
+- name: btp_be_employee-html5-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: btp_be_employee-portal
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: portal
+    service-plan: standard
+- name: btp_be_employee-registry
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      appName: btp_be_employee-${org}-${space}
+      appUrls:
+        callbackTimeoutMillis: 300000
+        getDependencies: ~{mtx-api/mtx-url}/-/cds/saas-provisioning/dependencies
+        onSubscription: ~{mtx-api/mtx-url}/-/cds/saas-provisioning/tenant/{tenantId}
+        onSubscriptionAsync: true
+        onUnSubscriptionAsync: true
+        onUpdateDependenciesAsync: true
+      category: Category
+      description: A simple CAP project.
+      displayName: btp_be_employee
+      xsappname: btp_be_employee-${org}-${space}
+    service: saas-registry
+    service-plan: application
+  requires:
+  - name: mtx-api
+- name: btp_be_employee-db
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: service-manager
+    service-plan: container
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

@@ -12,8 +12,8 @@
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
-      "version": "1.18.0",
-      "toolsId": "037e77ce-b4c1-4c4c-b7cd-53696d1ee72f"
+      "version": "1.18.2",
+      "toolsId": "01eb35b0-5bb4-4349-a3f3-211d505c8e04"
     },
     "dataSources": {
       "mainService": {
@@ -22,19 +22,6 @@
         "settings": {
           "annotations": [],
           "odataVersion": "4.0"
-        }
-      }
-    },
-    "crossNavigation": {
-      "inbounds": {
-        "employeeAdmin-manage": {
-          "semanticObject": "employeeAdmin",
-          "action": "manage",
-          "title": "{{employeeAdmin-manage.flpTitle}}",
-          "signature": {
-            "parameters": {},
-            "additionalParameters": "allowed"
-          }
         }
       }
     }
@@ -58,7 +45,7 @@
   "sap.ui5": {
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.136.1",
+      "minUI5Version": "1.138.0",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -98,28 +85,33 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "EmployeesList",
-          "target": "EmployeesList"
+          "name": "DepartmentList",
+          "target": "DepartmentList"
         },
         {
-          "pattern": "Employees({key}):?query:",
+          "pattern": "Department({key}):?query:",
+          "name": "DepartmentObjectPage",
+          "target": "DepartmentObjectPage"
+        },
+        {
+          "pattern": "Department({key})/Employees({key2}):?query:",
           "name": "EmployeesObjectPage",
           "target": "EmployeesObjectPage"
         }
       ],
       "targets": {
-        "EmployeesList": {
+        "DepartmentList": {
           "type": "Component",
-          "id": "EmployeesList",
+          "id": "DepartmentList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/Employees",
+              "contextPath": "/Department",
               "variantManagement": "Page",
               "navigation": {
-                "Employees": {
+                "Department": {
                   "detail": {
-                    "route": "EmployeesObjectPage"
+                    "route": "DepartmentObjectPage"
                   }
                 }
               },
@@ -133,6 +125,24 @@
             }
           }
         },
+        "DepartmentObjectPage": {
+          "type": "Component",
+          "id": "DepartmentObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Department",
+              "navigation": {
+                "Employees": {
+                  "detail": {
+                    "route": "EmployeesObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
         "EmployeesObjectPage": {
           "type": "Component",
           "id": "EmployeesObjectPage",
@@ -140,7 +150,7 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Employees"
+              "contextPath": "/Department/Employees"
             }
           }
         }
@@ -150,5 +160,9 @@
   "sap.fiori": {
     "registrationIds": [],
     "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "btp_be_employee"
   }
 }
