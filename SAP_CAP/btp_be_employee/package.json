@@ -9,7 +9,8 @@
     "@sap/cds": "^9.1.0",
     "@sap/cds-mtxs": "^3.1.0",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
-    "express": "^4"
+    "express": "^4",
+    "@sap/xssec": "^4"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.10.0",
@@ -26,13 +27,13 @@
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   },
-  "cds": {
+  "cds": {"hana": {
+    "deploy-format": "hdbtable"
+  },
     "requires": {
+      
       "db": {
-        "kind": "sqlite",
-        "credentials": {
-          "url": "empdb.db"
-        }
+        "kind": "hana"
       },
       "[production]": {
         "auth": "xsuaa",
@@ -44,9 +45,6 @@
     "profile": "with-mtx-sidecar"
   },
   "sapux": [
-    "app/btp_ui_employee",
-    "app/btp_employee",
-    "app/btp_ui_employee",
     "app/btp_ui_employee"
   ]
 }
