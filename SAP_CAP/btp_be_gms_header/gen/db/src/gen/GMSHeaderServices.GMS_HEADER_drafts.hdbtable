@@ -1,0 +1,12 @@
+COLUMN TABLE GMSHeaderServices_GMS_HEADER_drafts (
+  Magms NVARCHAR(15) NOT NULL,
+  htms NVARCHAR(30) NULL,
+  hscg NVARCHAR(30) NULL,
+  ptms NVARCHAR(30) NULL,
+  note NVARCHAR(255) NULL,
+  IsActiveEntity BOOLEAN,
+  HasActiveEntity BOOLEAN,
+  HasDraftEntity BOOLEAN,
+  DraftAdministrativeData_DraftUUID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(Magms)
+)

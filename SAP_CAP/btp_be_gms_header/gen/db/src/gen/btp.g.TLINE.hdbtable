@@ -1,0 +1,8 @@
+COLUMN TABLE btp_g_TLINE (
+  manhomcv NVARCHAR(1) NOT NULL,
+  tennhomcv NVARCHAR(60),
+  begda DATE,
+  endda DATE,
+  GMS_HEADER_Magms NVARCHAR(15),
+  PRIMARY KEY(manhomcv)
+)

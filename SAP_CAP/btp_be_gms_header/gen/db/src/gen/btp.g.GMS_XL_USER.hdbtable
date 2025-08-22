@@ -1,0 +1,13 @@
+COLUMN TABLE btp_g_GMS_XL_USER (
+  createdAt TIMESTAMP,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP,
+  modifiedBy NVARCHAR(255),
+  end_user NVARCHAR(255) NOT NULL,
+  file_id NVARCHAR(36) NOT NULL,
+  attachment VARBINARY(5000),
+  "MIMETYPE" NVARCHAR(128),
+  filename NVARCHAR(128),
+  GMS_HEADER_Magms NVARCHAR(15),
+  PRIMARY KEY(end_user, file_id)
+)

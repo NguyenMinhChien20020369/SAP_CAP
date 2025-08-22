@@ -1,0 +1,12 @@
+VIEW GMSHeaderServices_GMS_XL_USER AS SELECT
+  GMS_XL_USER_0.createdAt,
+  GMS_XL_USER_0.createdBy,
+  GMS_XL_USER_0.modifiedAt,
+  GMS_XL_USER_0.modifiedBy,
+  GMS_XL_USER_0.end_user,
+  GMS_XL_USER_0.file_id,
+  GMS_XL_USER_0.attachment,
+  GMS_XL_USER_0."MIMETYPE",
+  GMS_XL_USER_0.filename,
+  GMS_XL_USER_0.GMS_HEADER_Magms
+FROM btp_g_GMS_XL_USER AS GMS_XL_USER_0

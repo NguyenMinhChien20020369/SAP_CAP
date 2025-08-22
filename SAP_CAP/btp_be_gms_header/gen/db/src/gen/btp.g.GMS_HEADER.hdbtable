@@ -1,0 +1,8 @@
+COLUMN TABLE btp_g_GMS_HEADER (
+  Magms NVARCHAR(15) NOT NULL,
+  htms NVARCHAR(30),
+  hscg NVARCHAR(30),
+  ptms NVARCHAR(30),
+  note NVARCHAR(255),
+  PRIMARY KEY(Magms)
+)

@@ -1,0 +1,17 @@
+COLUMN TABLE btp_g_GMS_XL_data (
+  end_user NVARCHAR(255) NOT NULL,
+  file_id NVARCHAR(36) NOT NULL,
+  line_id NVARCHAR(36) NOT NULL,
+  line_no NVARCHAR(10) NOT NULL,
+  product_name NVARCHAR(40),
+  product_group NVARCHAR(10),
+  quantity NVARCHAR(10),
+  unit NVARCHAR(3),
+  price DECIMAL(15, 2),
+  total_price DECIMAL(15, 2),
+  currency NVARCHAR(5000),
+  GMS_HEADER_Magms NVARCHAR(15),
+  GMS_XL_USER_end_user NVARCHAR(255),
+  GMS_XL_USER_file_id NVARCHAR(36),
+  PRIMARY KEY(end_user, file_id, line_id, line_no)
+)

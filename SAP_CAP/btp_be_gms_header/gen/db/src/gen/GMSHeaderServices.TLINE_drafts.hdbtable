@@ -1,0 +1,12 @@
+COLUMN TABLE GMSHeaderServices_TLINE_drafts (
+  manhomcv NVARCHAR(1) NOT NULL,
+  tennhomcv NVARCHAR(60) NULL,
+  begda DATE NULL,
+  endda DATE NULL,
+  GMS_HEADER_Magms NVARCHAR(15) NULL,
+  IsActiveEntity BOOLEAN,
+  HasActiveEntity BOOLEAN,
+  HasDraftEntity BOOLEAN,
+  DraftAdministrativeData_DraftUUID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(manhomcv)
+)

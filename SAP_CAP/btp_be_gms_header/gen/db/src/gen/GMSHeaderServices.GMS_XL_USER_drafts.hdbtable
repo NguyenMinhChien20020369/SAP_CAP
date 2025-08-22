@@ -1,0 +1,17 @@
+COLUMN TABLE GMSHeaderServices_GMS_XL_USER_drafts (
+  createdAt TIMESTAMP NULL,
+  createdBy NVARCHAR(255) NULL,
+  modifiedAt TIMESTAMP NULL,
+  modifiedBy NVARCHAR(255) NULL,
+  end_user NVARCHAR(255) NOT NULL,
+  file_id NVARCHAR(36) NOT NULL,
+  attachment VARBINARY(5000) NULL,
+  "MIMETYPE" NVARCHAR(128) NULL,
+  filename NVARCHAR(128) NULL,
+  GMS_HEADER_Magms NVARCHAR(15) NULL,
+  IsActiveEntity BOOLEAN,
+  HasActiveEntity BOOLEAN,
+  HasDraftEntity BOOLEAN,
+  DraftAdministrativeData_DraftUUID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(end_user, file_id)
+)

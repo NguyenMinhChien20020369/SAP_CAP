@@ -1,0 +1,12 @@
+COLUMN TABLE cds_outbox_Messages (
+  ID NVARCHAR(36) NOT NULL,
+  "TIMESTAMP" TIMESTAMP,
+  target NVARCHAR(5000),
+  msg NCLOB,
+  attempts INTEGER DEFAULT 0,
+  partition INTEGER DEFAULT 0,
+  lastError NCLOB,
+  lastAttemptTimestamp TIMESTAMP,
+  status NVARCHAR(23),
+  PRIMARY KEY(ID)
+)

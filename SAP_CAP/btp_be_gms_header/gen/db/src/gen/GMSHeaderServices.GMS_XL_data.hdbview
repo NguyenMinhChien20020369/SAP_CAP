@@ -1,0 +1,16 @@
+VIEW GMSHeaderServices_GMS_XL_data AS SELECT
+  GMS_XL_data_0.end_user,
+  GMS_XL_data_0.file_id,
+  GMS_XL_data_0.line_id,
+  GMS_XL_data_0.line_no,
+  GMS_XL_data_0.product_name,
+  GMS_XL_data_0.product_group,
+  GMS_XL_data_0.quantity,
+  GMS_XL_data_0.unit,
+  GMS_XL_data_0.price,
+  GMS_XL_data_0.total_price,
+  GMS_XL_data_0.currency,
+  GMS_XL_data_0.GMS_HEADER_Magms,
+  GMS_XL_data_0.GMS_XL_USER_end_user,
+  GMS_XL_data_0.GMS_XL_USER_file_id
+FROM btp_g_GMS_XL_data AS GMS_XL_data_0

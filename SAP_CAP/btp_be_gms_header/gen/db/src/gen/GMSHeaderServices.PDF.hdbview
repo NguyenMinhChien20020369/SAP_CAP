@@ -1,0 +1,12 @@
+VIEW GMSHeaderServices_PDF AS SELECT
+  PDF_0.createdAt,
+  PDF_0.createdBy,
+  PDF_0.modifiedAt,
+  PDF_0.modifiedBy,
+  PDF_0.end_user,
+  PDF_0.file_id,
+  PDF_0.attachment,
+  PDF_0."MIMETYPE",
+  PDF_0.filename,
+  PDF_0.GMS_HEADER_Magms
+FROM btp_g_PDF AS PDF_0

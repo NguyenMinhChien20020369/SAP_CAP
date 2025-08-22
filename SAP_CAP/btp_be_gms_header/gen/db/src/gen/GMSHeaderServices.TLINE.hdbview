@@ -1,0 +1,7 @@
+VIEW GMSHeaderServices_TLINE AS SELECT
+  TLINE_0.manhomcv,
+  TLINE_0.tennhomcv,
+  TLINE_0.begda,
+  TLINE_0.endda,
+  TLINE_0.GMS_HEADER_Magms
+FROM btp_g_TLINE AS TLINE_0

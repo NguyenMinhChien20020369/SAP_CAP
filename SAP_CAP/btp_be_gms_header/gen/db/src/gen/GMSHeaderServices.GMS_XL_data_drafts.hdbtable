@@ -1,0 +1,21 @@
+COLUMN TABLE GMSHeaderServices_GMS_XL_data_drafts (
+  end_user NVARCHAR(255) NOT NULL,
+  file_id NVARCHAR(36) NOT NULL,
+  line_id NVARCHAR(36) NOT NULL,
+  line_no NVARCHAR(10) NOT NULL,
+  product_name NVARCHAR(40) NULL,
+  product_group NVARCHAR(10) NULL,
+  quantity NVARCHAR(10) NULL,
+  unit NVARCHAR(3) NULL,
+  price DECIMAL(15, 2) NULL,
+  total_price DECIMAL(15, 2) NULL,
+  currency NVARCHAR(5000) NULL,
+  GMS_HEADER_Magms NVARCHAR(15) NULL,
+  GMS_XL_USER_end_user NVARCHAR(255) NULL,
+  GMS_XL_USER_file_id NVARCHAR(36) NULL,
+  IsActiveEntity BOOLEAN,
+  HasActiveEntity BOOLEAN,
+  HasDraftEntity BOOLEAN,
+  DraftAdministrativeData_DraftUUID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(end_user, file_id, line_id, line_no)
+)

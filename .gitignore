@@ -1,0 +1,4 @@
+.vscode/
+AppTemplater/
+SAP_CAP/btp_be_gms_header/node_modules
+SAP_CAP/btp_be_gms_header/app/btp_ui_gms_header/node_modules
