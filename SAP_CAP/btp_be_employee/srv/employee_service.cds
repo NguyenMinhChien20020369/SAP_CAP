@@ -39,11 +39,11 @@ service EmployeeServices @(impl: 'srv/emp_service.js') {
     }) as
          // select from
              projection on bj.DEPARTMENT
-    //    {
-    //     ID,
-    //     NAME,
-    //     Employees : redirected to Employees
-    //    }
+       {
+        ID,
+        NAME,
+        Employees : redirected to Employees
+       }
     ;
 
     annotate Department with @odata.draft.enabled;

@@ -1,0 +1,37 @@
+{
+  "name": "btp_be_gms_header",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^9",
+    "express": "^4",
+    "xlsx": "^0.18.5"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.13.0",
+    "@cap-js/sqlite": "^2"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-btp_ui_gms_header": "cds watch --open btp_ui_gms_header/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "gms_h.db"
+        }
+      }
+    }
+  },
+  "sapux": [
+    "app/btp_ui_gms_header"
+  ]
+}

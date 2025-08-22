@@ -1,0 +1,33 @@
+{
+  "generationParameters": {
+    "generationDate": "Wed Jul 16 2025 10:38:58 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local Cap",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/odata/v4/gmsheader-services/",
+    "appName": "btp_ui_gms_header",
+    "appTitle": "GMS Header",
+    "appDescription": "An SAP Fiori application for GMS Header.",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.138.0",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.18.2",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "GMS_HEADER"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "GMS_XL_data"
+      }
+    ],
+    "launchText": "In order to launch the generated app, simply start your CAP project and navigate to the following location in your browser:\n\nhttp://localhost:4004/btp_ui_gms_header/webapp/index.html"
+  }
+}
